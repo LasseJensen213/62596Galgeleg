@@ -113,54 +113,179 @@ public class GalgeKlient extends javax.swing.JFrame {
         });
 
         jButton4.setText("d");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton5.setText("e");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton6.setText("f");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton7.setText("g");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton8.setText("h");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton9.setText("i");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton10.setText("j");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton11.setText("k");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton12.setText("l");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton13.setText("m");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton14.setText("n");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton15.setText("o");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton16.setText("p");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton17.setText("q");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton18.setText("r");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton19.setText("s");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton20.setText("t");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton21.setText("u");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton22.setText("v");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton23.setText("x");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton24.setText("y");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton25.setText("z");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton26.setText("æ");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton27.setText("ø");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         jButton28.setText("å");
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GalgeKlient.this.actionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelButtonsLayout = new javax.swing.GroupLayout(jPanelButtons);
         jPanelButtons.setLayout(jPanelButtonsLayout);
@@ -321,9 +446,6 @@ public class GalgeKlient extends javax.swing.JFrame {
         System.out.println(evt.getActionCommand());
         
         String button = evt.getActionCommand();
-        
-        
-            
       
     }//GEN-LAST:event_actionPerformed
 
@@ -409,6 +531,9 @@ public class GalgeKlient extends javax.swing.JFrame {
 
     private void game() throws RemoteException {
         jLabelGuess.setText(spil.getSynligtOrd());
+        
+        
+        
     }
     
    
