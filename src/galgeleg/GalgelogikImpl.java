@@ -188,4 +188,4 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         nulstil();
     }
 
-    }
+}

@@ -5,14 +5,15 @@
  */
 package galgeleg;
 
-import java.awt.event.ActionEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  *
@@ -21,11 +22,13 @@ import javax.swing.ImageIcon;
 public class GalgeKlient extends javax.swing.JFrame {
 
     GalgelogikI spil;
+    ArrayList<javax.swing.JButton> buttons;
 
     /**
      * Creates new form NewJFrame
      */
     public GalgeKlient() throws MalformedURLException, RemoteException, NotBoundException {
+        buttons = new ArrayList<javax.swing.JButton>();
         spil = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
         try {
             spil.hentOrdFraDr();
@@ -33,7 +36,7 @@ public class GalgeKlient extends javax.swing.JFrame {
             Logger.getLogger(GalgeKlient.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        game();
+        updateOrd();
     }
 
     /**
@@ -412,7 +415,7 @@ public class GalgeKlient extends javax.swing.JFrame {
                         .addComponent(jLabelHeader))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addComponent(jLabelGuess, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelGuess, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -442,11 +445,30 @@ public class GalgeKlient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void actionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionPerformed
-        // TODO add your handling code here:wwwwww
-        System.out.println(evt.getActionCommand());
-        
-        String button = evt.getActionCommand();
-      
+        // TODO add your handling code here:
+
+        JButton button = (JButton) evt.getSource();
+        button.setEnabled(false);
+        String buttonPressed = evt.getActionCommand();
+        System.out.println(buttonPressed);
+
+        try {
+            spil.gætBogstav(buttonPressed);
+            updateOrd();
+            if (!spil.erSidsteBogstavKorrekt()) {
+                hangman();
+            }
+            if (spil.erSpilletVundet()) {
+                gameWon();
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(GalgeKlient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        revalidate();
+        repaint();
+
+
     }//GEN-LAST:event_actionPerformed
 
     /**
@@ -529,12 +551,45 @@ public class GalgeKlient extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelButtons;
     // End of variables declaration//GEN-END:variables
 
-    private void game() throws RemoteException {
+    private void updateOrd() throws RemoteException {
         jLabelGuess.setText(spil.getSynligtOrd());
-        
-        
-        
     }
-    
-   
+
+    private void hangman() throws RemoteException {
+        int forkerte = spil.getAntalForkerteBogstaver();
+        switch (forkerte) {
+            case 1:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert1.png")));
+                break;
+            case 2:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert2.png")));
+                break;
+            case 3:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert3.png")));
+                break;
+            case 4:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert4.png")));
+                break;
+            case 5:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert5.png")));
+                break;
+            case 6:
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert6.png")));
+                gameLost();
+                break;
+        }
+    }
+
+    private void gameLost() throws RemoteException {
+        jPanelButtons.setVisible(false);
+        jLabel1.setText("Du har tabt!");
+        jLabelGuess.setText("Ordet var: " + spil.getOrdet());
+    }
+
+    private void gameWon() {
+        jPanelButtons.setVisible(false);
+        jLabel1.setText("Du har vundet!");
+        jLabelGuess.setVisible(false);
+    }
+
 }
