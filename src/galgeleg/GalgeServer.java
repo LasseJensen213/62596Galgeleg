@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package galgeleg;
 
 import galgeleg.GalgelogikI;
 import galgeleg.GalgelogikImpl;
@@ -22,14 +22,6 @@ public class GalgeServer {
         Naming.rebind("rmi://localhost/galgetjeneste", k);
 
         System.out.println("Galgeleg tjeneste registreret.");
-
-        Brugerdatabase db = Brugerdatabase.getInstans();
-        System.out.println("Publicerer Brugeradmin over RMI");
-        BrugeradminImpl impl = new BrugeradminImpl();
-        impl.db = db;
-        java.rmi.registry.LocateRegistry.createRegistry(1100); // start rmiregistry i server-JVM
-        Naming.rebind("rmi://localhost/brugeradmin", impl);
-        System.out.println("Brugeradmin publiceret over RMI");
 
     }
 

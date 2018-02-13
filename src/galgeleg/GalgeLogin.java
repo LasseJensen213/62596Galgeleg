@@ -5,7 +5,6 @@
  */
 package galgeleg;
 
-import server.Brugeradmin;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -13,7 +12,6 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import server.Bruger;
 
 /**
  *
@@ -114,12 +112,15 @@ public class GalgeLogin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         try {
-
-            GalgeKlient frame = new GalgeKlient();
-            frame.setVisible(true);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            this.dispose();
-        } catch (MalformedURLException | RemoteException | NotBoundException ex) {
+            GalgelogikI g = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
+            if(g.auth(jTextFieldName.getText(), String.valueOf(jPasswordField.getPassword()))){
+                GalgeKlient frame = new GalgeKlient();
+                frame.setVisible(true);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                this.dispose();
+            }
+        
+        } catch (Exception ex) {
             Logger.getLogger(GalgeLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -8,7 +8,9 @@ package galgeleg;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -44,8 +46,7 @@ public interface GalgelogikI extends java.rmi.Remote {
 
     public void hentOrdFraDr() throws Exception, java.rmi.RemoteException;
 
-    
-
+    public boolean auth(String username, String password) throws Exception, java.rmi.RemoteException;
     
     
 }

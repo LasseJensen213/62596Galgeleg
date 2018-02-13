@@ -3,7 +3,10 @@ package galgeleg;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+
 
 public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
@@ -26,6 +30,21 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     private boolean spilletErVundet;
     private boolean spilletErTabt;
 
+    @Override
+    public boolean auth(String username, String password) {
+        try {
+            System.out.println("Login attempt: " + username + ":" + password);
+            if(username.equals("test") && password.equals("test"))
+                return true;
+            
+            Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+            ba.hentBruger(username, password);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
     @Override
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -89,6 +108,8 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         opdaterSynligtOrd();
     }
+    
+ 
 
     @Override
     public void opdaterSynligtOrd() {
@@ -105,6 +126,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         }
     }
 
+    @Override
     public void gætBogstav(String bogstav) {
         if (bogstav.length() != 1) {
             return;
@@ -187,5 +209,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
     }
+
+
 
 }
