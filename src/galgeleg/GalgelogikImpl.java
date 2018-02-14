@@ -1,5 +1,6 @@
 package galgeleg;
 
+import brugerautorisation.transport.soap.Brugeradmin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
 
 public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
@@ -37,7 +40,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
             if(username.equals("test") && password.equals("test"))
                 return true;
             
-            Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+            URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
+            QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
+            Service service = Service.create(url, qname);
+            Brugeradmin ba = service.getPort(Brugeradmin.class);
+            
             ba.hentBruger(username, password);
             return true;
         } catch (Exception ex) {
