@@ -29,7 +29,7 @@ public class GalgeKlient extends javax.swing.JFrame {
      */
     public GalgeKlient() throws MalformedURLException, RemoteException, NotBoundException {
         buttons = new ArrayList<javax.swing.JButton>();
-        spil = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
+        spil = (GalgelogikI) Naming.lookup("rmi://78.47.125.230:1021/galgetjeneste");
         try {
             spil.hentOrdFraDr();
         } catch (Exception ex) {
