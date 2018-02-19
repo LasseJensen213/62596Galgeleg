@@ -22,6 +22,9 @@ public class GalgeServer {
         Naming.rebind("rmi://localhost/galgetjeneste", k);
 
         System.out.println("Galgeleg tjeneste registreret.");
+        GalgeLogin galgeLogin = new GalgeLogin();
+        galgeLogin.setVisible(true);
+        
 
     }
 

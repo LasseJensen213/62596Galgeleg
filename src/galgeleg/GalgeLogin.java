@@ -12,6 +12,9 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 
 /**
  *
@@ -24,7 +27,18 @@ public class GalgeLogin extends javax.swing.JFrame {
      */
     public GalgeLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+    
+    private void centerFrame() {
+
+            Dimension windowSize = getSize();
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Point centerPoint = ge.getCenterPoint();
+            int dx = centerPoint.x - windowSize.width / 2;
+            int dy = centerPoint.y - windowSize.height / 2;    
+            setLocation(dx, dy);
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,14 +105,13 @@ public class GalgeLogin extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(126, 87, 194));
         jButton2.setFont(new java.awt.Font("Changa", 0, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Login");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanelLogin.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 270, 50));
+        jPanelLogin.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 270, 50));
 
         getContentPane().add(jPanelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 486));
 
@@ -110,13 +123,15 @@ public class GalgeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNameActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        
         try {
             GalgelogikI g = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
             if(g.auth(jTextFieldName.getText(), String.valueOf(jPasswordField.getPassword()))){
                 GalgeKlient frame = new GalgeKlient();
                 frame.setVisible(true);
-                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setSize(250, 200);
+                centerFrame();
                 this.dispose();
             }
         
@@ -162,7 +177,7 @@ public class GalgeLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GalgeLogin().setVisible(true);
+                //new GalgeLogin().setVisible(true);
             }
         });
     }
