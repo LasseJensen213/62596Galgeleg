@@ -127,7 +127,7 @@ public class GalgeLogin extends javax.swing.JFrame {
         try {
             GalgelogikI g = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
             if(g.auth(jTextFieldName.getText(), String.valueOf(jPasswordField.getPassword()))){
-                GalgeKlient frame = new GalgeKlient();
+                GalgeSpil frame = new GalgeSpil();
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 setSize(250, 200);
@@ -177,7 +177,7 @@ public class GalgeLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new GalgeLogin().setVisible(true);
+                new GalgeLogin().setVisible(true);
             }
         });
     }

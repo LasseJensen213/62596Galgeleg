@@ -37,9 +37,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     public boolean auth(String username, String password) {
         try {
             System.out.println("Login attempt: " + username + ":" + password);
+            
+            /*
             if(username.equals("test") && password.equals("test"))
                 return true;
-            
+            */
             URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
             QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
             Service service = Service.create(url, qname);
