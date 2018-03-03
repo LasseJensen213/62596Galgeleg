@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package galgeleg;
+package galgeleg_client;
 
+import galgeleg_server.GalgelogikI;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -31,7 +32,7 @@ public class GalgeSpil extends javax.swing.JFrame {
     public GalgeSpil() throws MalformedURLException, RemoteException, NotBoundException {
         buttons = new ArrayList<javax.swing.JButton>();
         //spil = (GalgelogikI) Naming.lookup("rmi://78.47.125.230:1021/galgetjeneste");
-        spil = (GalgelogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste"); 
+        spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
         try {
             spil.hentOrdFraDr();
         } catch (Exception ex) {

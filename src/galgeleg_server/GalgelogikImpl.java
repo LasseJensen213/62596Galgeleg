@@ -1,13 +1,15 @@
-package galgeleg;
+package galgeleg_server;
 
 import brugerautorisation.transport.soap.Brugeradmin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -42,6 +44,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
             if(username.equals("test") && password.equals("test"))
                 return true;
             */
+           
             URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
             QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
             Service service = Service.create(url, qname);
@@ -217,6 +220,29 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
+    }
+    
+    public void hentOrdFraDrTV() throws MalformedURLException, IOException {
+        URL url = new URL("http://www.dr.dk/muTest/api/1.2/channel/all-active-dr-tv-channels");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+        
+        if (conn.getResponseCode() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+           
+        }
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String output;
+        System.out.println("Output from server... \n");
+        while ((output = br.readLine()) != null) {
+            System.out.println(output);
+        }
+        
+        
+        conn.disconnect();
+        
     }
 
 

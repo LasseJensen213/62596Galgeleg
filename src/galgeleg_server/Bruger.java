@@ -1,4 +1,4 @@
-package galgeleg;
+package galgeleg_server;
 
 import java.io.*;
 import java.util.HashMap;

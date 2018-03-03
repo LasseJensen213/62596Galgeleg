@@ -1,7 +1,7 @@
-package galgeleg;
+package galgeleg_server;
 
 
-import galgeleg.Bruger;
+import galgeleg_server.Bruger;
 import java.util.ArrayList;
 
 public interface Brugeradmin extends java.rmi.Remote {
