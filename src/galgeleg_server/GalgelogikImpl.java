@@ -17,9 +17,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
-
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
@@ -39,24 +42,23 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     public boolean auth(String username, String password) {
         try {
             System.out.println("Login attempt: " + username + ":" + password);
-            
+
             /*
             if(username.equals("test") && password.equals("test"))
                 return true;
-            */
-           
+             */
             URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
             QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
             Service service = Service.create(url, qname);
             Brugeradmin ba = service.getPort(Brugeradmin.class);
-            
+
             ba.hentBruger(username, password);
             return true;
         } catch (Exception ex) {
             return false;
         }
     }
-    
+
     @Override
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -120,8 +122,6 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         opdaterSynligtOrd();
     }
-    
- 
 
     @Override
     public void opdaterSynligtOrd() {
@@ -221,30 +221,34 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
     }
-    
+
     public void hentOrdFraDrTV() throws MalformedURLException, IOException {
-        URL url = new URL("http://www.dr.dk/muTest/api/1.2/channel/all-active-dr-tv-channels");
+        URL url = new URL("https://www.dr.dk/mu-online/api/1.0/page/tv/front");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
-        
+
         if (conn.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-           
+
         }
-        
+
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        
+
         String output;
         System.out.println("Output from server... \n");
         while ((output = br.readLine()) != null) {
             System.out.println(output);
+
         }
         
         
-        conn.disconnect();
         
+        
+
+        conn.disconnect();
+
     }
-
-
 
 }

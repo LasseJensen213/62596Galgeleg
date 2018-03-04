@@ -45,6 +45,8 @@ public interface GalgelogikI extends java.rmi.Remote {
     public void logStatus() throws java.rmi.RemoteException;
 
     public void hentOrdFraDr() throws Exception, java.rmi.RemoteException;
+    
+    public void hentOrdFraDrTV() throws Exception, java.rmi.RemoteException;
 
     public boolean auth(String username, String password) throws Exception, java.rmi.RemoteException;
     

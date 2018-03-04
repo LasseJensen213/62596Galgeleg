@@ -35,6 +35,7 @@ public class GalgeSpil extends javax.swing.JFrame {
         spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
         try {
             spil.hentOrdFraDr();
+            spil.hentOrdFraDrTV();
         } catch (Exception ex) {
             Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
         }
