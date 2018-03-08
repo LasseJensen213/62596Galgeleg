@@ -1,4 +1,4 @@
-package galgeleg_server;
+package brugerautorisation.transport.soap;
 
 import java.io.*;
 import java.util.HashMap;
