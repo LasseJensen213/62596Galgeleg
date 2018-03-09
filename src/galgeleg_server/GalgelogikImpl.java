@@ -60,46 +60,46 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     }
 
     @Override
-    public ArrayList<String> getBrugteBogstaver() {
+    public ArrayList<String> getBrugteBogstaver(String identifier) {
         return brugteBogstaver;
     }
 
     @Override
-    public String getSynligtOrd() {
+    public String getSynligtOrd(String identifier) {
         return synligtOrd;
     }
 
     @Override
-    public String getOrdet() {
+    public String getOrdet(String identifier) {
         return ordet;
     }
 
     @Override
-    public int getAntalForkerteBogstaver() {
+    public int getAntalForkerteBogstaver(String identifier) {
         return antalForkerteBogstaver;
     }
 
     @Override
-    public boolean erSidsteBogstavKorrekt() {
+    public boolean erSidsteBogstavKorrekt(String identifier) {
         return sidsteBogstavVarKorrekt;
     }
 
     @Override
-    public boolean erSpilletVundet() {
+    public boolean erSpilletVundet(String identifier) {
         return spilletErVundet;
     }
 
     @Override
-    public boolean erSpilletTabt() {
+    public boolean erSpilletTabt(String identifier) {
         return spilletErTabt;
     }
 
     @Override
-    public boolean erSpilletSlut() {
+    public boolean erSpilletSlut(String identifier) {
         return spilletErTabt || spilletErVundet;
     }
 
-    public GalgelogikImpl() throws java.rmi.RemoteException {
+    public GalgelogikImpl(String identifier) throws java.rmi.RemoteException {
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -110,21 +110,21 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         muligeOrd.add("solsort");
         muligeOrd.add("seksten");
         muligeOrd.add("sytten");
-        nulstil();
+        nulstil(identifier);
     }
 
     @Override
-    public void nulstil() {
+    public void nulstil(String identifier) {
         brugteBogstaver.clear();
         antalForkerteBogstaver = 0;
         spilletErVundet = false;
         spilletErTabt = false;
         ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
-        opdaterSynligtOrd();
+        opdaterSynligtOrd(identifier);
     }
 
     @Override
-    public void opdaterSynligtOrd() {
+    public void opdaterSynligtOrd(String identifier) {
         synligtOrd = "";
         spilletErVundet = true;
         for (int n = 0; n < ordet.length(); n++) {
@@ -139,7 +139,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     }
 
     @Override
-    public void gætBogstav(String bogstav) {
+    public void gætBogstav(String identifier, String bogstav) {
         if (bogstav.length() != 1) {
             return;
         }
@@ -165,11 +165,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
                 spilletErTabt = true;
             }
         }
-        opdaterSynligtOrd();
+        opdaterSynligtOrd(identifier);
     }
 
     @Override
-    public void logStatus() {
+    public void logStatus(String identifier) {
         System.out.println("---------- ");
         System.out.println("- ordet (skult) = " + ordet);
         System.out.println("- synligtOrd = " + synligtOrd);
@@ -197,7 +197,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     }
 
     @Override
-    public void hentOrdFraDr() throws IOException {
+    public void hentOrdFraDr(String identifier) throws IOException {
         String data = hentUrl("https://dr.dk");
         //System.out.println("data = " + data);
 
@@ -219,10 +219,10 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
 
         System.out.println("muligeOrd = " + muligeOrd);
-        nulstil();
+        nulstil(identifier);
     }
 
-    public void hentOrdFraDrTV() throws MalformedURLException, IOException {
+    public void hentOrdFraDrTV(String identifier) throws MalformedURLException, IOException {
         URL url = new URL("https://www.dr.dk/mu-online/api/1.0/page/tv/front");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -251,4 +251,5 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
     }
 
+    
 }

@@ -5,6 +5,7 @@
  */
 package galgeleg_server;
 
+import galgeleg_client.Exceptions.NoInstanceOfGame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,35 +21,35 @@ import java.util.ArrayList;
  */
 public interface GalgelogikI extends java.rmi.Remote {
 
-    public ArrayList<String> getBrugteBogstaver() throws java.rmi.RemoteException;
+    public ArrayList<String> getBrugteBogstaver(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public String getSynligtOrd() throws java.rmi.RemoteException;
+    public String getSynligtOrd(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public String getOrdet() throws java.rmi.RemoteException;
+    public String getOrdet(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public int getAntalForkerteBogstaver() throws java.rmi.RemoteException;
+    public int getAntalForkerteBogstaver(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public boolean erSidsteBogstavKorrekt() throws java.rmi.RemoteException;
+    public boolean erSidsteBogstavKorrekt(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public boolean erSpilletVundet() throws java.rmi.RemoteException;
+    public boolean erSpilletVundet(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public boolean erSpilletTabt() throws java.rmi.RemoteException;
+    public boolean erSpilletTabt(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public boolean erSpilletSlut() throws java.rmi.RemoteException;
+    public boolean erSpilletSlut(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public void nulstil() throws java.rmi.RemoteException;
+    public void nulstil(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public void opdaterSynligtOrd() throws java.rmi.RemoteException;
+    public void opdaterSynligtOrd(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public void gætBogstav(String bogstav) throws java.rmi.RemoteException;
+    public void gætBogstav(String identifier,String bogstav) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public void logStatus() throws java.rmi.RemoteException;
+    public void logStatus(String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
 
-    public void hentOrdFraDr() throws Exception, java.rmi.RemoteException;
+    public void hentOrdFraDr(String identifier) throws Exception, java.rmi.RemoteException, NoInstanceOfGame;
     
-    public void hentOrdFraDrTV() throws Exception, java.rmi.RemoteException;
+    public void hentOrdFraDrTV(String identifier) throws Exception, java.rmi.RemoteException, NoInstanceOfGame;
 
-    public boolean auth(String username, String password) throws Exception, java.rmi.RemoteException;
+    public boolean auth(String username, String password) throws Exception, java.rmi.RemoteException, NoInstanceOfGame;
     
     
 }
