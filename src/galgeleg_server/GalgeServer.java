@@ -23,17 +23,17 @@ public class GalgeServer {
        
     
 
-        //java.rmi.registry.LocateRegistry.createRegistry(1151);
+        java.rmi.registry.LocateRegistry.createRegistry(1151);
         GalgelogikI gm = new GameManager();
         //GalgelogikI k = new GalgelogikImpl();
         //Naming.rebind("rmi://[::]/galgetjeneste", k);
         
-        //System.setProperty("java.rmi.server.hostname", "ubuntu4.saluton.dk");
-	//Naming.rebind("rmi://ubuntu4.saluton.dk:1151/galgetjeneste", gm);
+        System.setProperty("java.rmi.server.hostname", "ubuntu4.saluton.dk");
+	Naming.rebind("rmi://ubuntu4.saluton.dk:1151/galgetjeneste", gm);
         
         //Naming.rebind("rmi://localhost/galgetjeneste", gm);
-        java.rmi.registry.LocateRegistry.createRegistry(1099); // start rmiregistry i server-JVM
-        Naming.rebind("rmi://localhost/galgetjeneste", gm);
+        //java.rmi.registry.LocateRegistry.createRegistry(1099); // start rmiregistry i server-JVM
+        //Naming.rebind("rmi://localhost/galgetjeneste", gm);
         
 
         System.out.println("Galgeleg tjeneste registreret.");
