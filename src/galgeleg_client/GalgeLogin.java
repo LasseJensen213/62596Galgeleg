@@ -132,7 +132,7 @@ public class GalgeLogin extends javax.swing.JFrame {
 
         try {
             //GameManager gm = (GameManager) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
-            GalgelogikI gm = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
+            GalgelogikI gm = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
             String username = jTextFieldName.getText();
       
             if(gm.auth(username, String.valueOf(jPasswordField.getPassword()))){

@@ -36,8 +36,8 @@ public class GalgeSpil extends javax.swing.JFrame {
         
         buttons = new ArrayList<javax.swing.JButton>();
         //spil = (GalgelogikI) Naming.lookup("rmi://78.47.125.230:1021/galgetjeneste");
-        //spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
-        spil = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
+        spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
+        //spil = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
         System.out.println(identifier);
         try {
             spil.hentOrdFraDr(identifier);
