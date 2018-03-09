@@ -6,6 +6,7 @@
 package galgeleg_client;
 
 import galgeleg_server.GalgelogikI;
+import galgeleg_server.GameManager;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -130,9 +131,14 @@ public class GalgeLogin extends javax.swing.JFrame {
  
 
         try {
-            GalgelogikI g = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
-            if(g.auth(jTextFieldName.getText(), String.valueOf(jPasswordField.getPassword()))){
+            //GameManager gm = (GameManager) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
+            GalgelogikI gm = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
+            String username = jTextFieldName.getText();
+      
+            if(gm.auth(username, String.valueOf(jPasswordField.getPassword()))){
+            
                 GalgeSpil frame = new GalgeSpil();
+                frame.setIdentifier(username);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 setSize(250, 200);
