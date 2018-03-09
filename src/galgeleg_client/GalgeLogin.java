@@ -132,13 +132,12 @@ public class GalgeLogin extends javax.swing.JFrame {
 
         try {
             //GameManager gm = (GameManager) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
-            GalgelogikI gm = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste");
+            GalgelogikI gm = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
             String username = jTextFieldName.getText();
       
             if(gm.auth(username, String.valueOf(jPasswordField.getPassword()))){
             
-                GalgeSpil frame = new GalgeSpil();
-                frame.setIdentifier(username);
+                GalgeSpil frame = new GalgeSpil(username);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 setSize(250, 200);

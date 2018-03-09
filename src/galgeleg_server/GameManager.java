@@ -11,31 +11,45 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class GameManager extends UnicastRemoteObject implements GalgelogikI {
 
-public class GameManager extends UnicastRemoteObject implements GalgelogikI{
-    
-Map<String,GalgelogikImpl> listOfGames = new HashMap<>();
-    
-public GameManager() throws java.rmi.RemoteException {
-    
-}
-   
-    private boolean gameInList(String identifier) {
-        return listOfGames.containsValue(identifier);
+    Map<String, GalgelogikImpl> listOfGames = new HashMap<>();
+
+    public GameManager() throws java.rmi.RemoteException {
+        System.out.println("BeforeThread");
+        (new Thread(new CleanUpThread())).start();
+        System.out.println("AfterThread");
     }
-    private GalgelogikImpl getGame(String identifier) throws NoInstanceOfGame {
+
+    private boolean gameInList(String identifier) {
+        return listOfGames.containsKey(identifier);
+    }
+    private long getTimeOfLastCommunication(String identifier) throws NoInstanceOfGame {
         GalgelogikImpl returnValue;
         returnValue = listOfGames.get(identifier);
-        
-        if(returnValue == null) {
+
+        if (returnValue == null) {
             throw new NoInstanceOfGame();
+        } else {
+            return returnValue.getTimeOfLastCommunication();
         }
-        else {
+    }
+
+    private GalgelogikImpl getGame(String identifier) throws NoInstanceOfGame {
+        System.out.println("Identifier:" + identifier);
+        GalgelogikImpl returnValue;
+        returnValue = listOfGames.get(identifier);
+
+        if (returnValue == null) {
+            throw new NoInstanceOfGame();
+        } else {
+            returnValue.updateTimeOfLastCommunication();
             return returnValue;
-        }    
+        }
     }
 
     public void addGame(GalgelogikImpl gameToBeAdded, String identifier) {
@@ -110,27 +124,54 @@ public GameManager() throws java.rmi.RemoteException {
 
     @Override
     public void hentOrdFraDrTV(String identifier) throws Exception, RemoteException, NoInstanceOfGame {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        getGame(identifier).hentOrdFraDrTV(identifier);
     }
 
     @Override
     public boolean auth(String username, String password) throws Exception, RemoteException, NoInstanceOfGame {
-        if(!gameInList(username)) {
+        if (!gameInList(username)) {
             System.out.println("bitch");
             GalgelogikImpl newGame = new GalgelogikImpl(username);
-            addGame(newGame,username);
+            addGame(newGame, username);
             return newGame.auth(username, password);
-            
-        }
-        else {
+
+        } else {
             return getGame(username).auth(username, password);
         }
-        
-        
+
     }
 
-   
+    class CleanUpThread implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("We up and running");
+            
+            while (true) {
+                System.out.println("We up and running");
+                Set<String> keys = listOfGames.keySet();
+                for (String s : keys) {
+                    //Time 3 hours:21600000
+                    try {
+                        System.out.println(s);
+                        System.out.println(System.currentTimeMillis() - getTimeOfLastCommunication(s));
+                        if (System.currentTimeMillis() - getTimeOfLastCommunication(s) > 21600000) {
+                            listOfGames.remove(s);
+                            System.out.println("Removed instance of game for user: " + s);
+                        }
+                    } catch (NoInstanceOfGame ex) {
+                        Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                try {
+                        Thread.sleep(3600000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }
 
+        }
+
+    }
 
 }
-

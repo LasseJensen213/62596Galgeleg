@@ -37,6 +37,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     private boolean sidsteBogstavVarKorrekt;
     private boolean spilletErVundet;
     private boolean spilletErTabt;
+    private long timeOfLastCommunication;
 
     @Override
     public boolean auth(String username, String password) {
@@ -54,7 +55,9 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
             ba.hentBruger(username, password);
             return true;
+            
         } catch (Exception ex) {
+            System.out.println("No");
             return false;
         }
     }
@@ -100,6 +103,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
     }
 
     public GalgelogikImpl(String identifier) throws java.rmi.RemoteException {
+        timeOfLastCommunication = System.currentTimeMillis();
+        
+        
+        
+        
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -111,6 +119,13 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         muligeOrd.add("seksten");
         muligeOrd.add("sytten");
         nulstil(identifier);
+    }
+    
+    protected void updateTimeOfLastCommunication() {
+        timeOfLastCommunication = System.currentTimeMillis();
+    }
+    protected long getTimeOfLastCommunication() {
+        return timeOfLastCommunication;
     }
 
     @Override

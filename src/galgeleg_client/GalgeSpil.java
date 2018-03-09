@@ -32,12 +32,12 @@ public class GalgeSpil extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
 
-    public GalgeSpil() throws MalformedURLException, RemoteException, NotBoundException {
-        
+    public GalgeSpil(String identifier) throws MalformedURLException, RemoteException, NotBoundException {
+        this.identifier = identifier;
         buttons = new ArrayList<javax.swing.JButton>();
         //spil = (GalgelogikI) Naming.lookup("rmi://78.47.125.230:1021/galgetjeneste");
-        spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
-        //spil = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
+        //spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
+        spil = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
         System.out.println(identifier);
         try {
             spil.hentOrdFraDr(identifier);
@@ -516,13 +516,13 @@ public class GalgeSpil extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
+    
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 System.out.println("IsThisRun?");
                 try {
-                    new GalgeSpil().setVisible(true);
+                    new GalgeSpil(null).setVisible(true);
                 } catch (NotBoundException ex) {
                     Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (MalformedURLException ex) {
