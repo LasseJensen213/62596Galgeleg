@@ -5,6 +5,7 @@
  */
 package galgeleg_client;
 
+import galgeleg_client.Exceptions.NoInstanceOfGame;
 import galgeleg_server.GalgelogikI;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -25,17 +26,22 @@ public class GalgeSpil extends javax.swing.JFrame {
 
     GalgelogikI spil;
     ArrayList<javax.swing.JButton> buttons;
+    String identifier;                                                      //Used to idenfitify the game from the game manager.
 
     /**
      * Creates new form NewJFrame
      */
+
     public GalgeSpil() throws MalformedURLException, RemoteException, NotBoundException {
+        
         buttons = new ArrayList<javax.swing.JButton>();
         //spil = (GalgelogikI) Naming.lookup("rmi://78.47.125.230:1021/galgetjeneste");
-        spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
+        //spil = (GalgelogikI) Naming.lookup("rmi://ubuntu4.saluton.dk:1151/galgetjeneste"); 
+        spil = (GalgelogikI) Naming.lookup("rmi://localhost/galgetjeneste");
+        System.out.println(identifier);
         try {
-            spil.hentOrdFraDr();
-            spil.hentOrdFraDrTV();
+            spil.hentOrdFraDr(identifier);
+            spil.hentOrdFraDrTV(identifier);
         } catch (Exception ex) {
             Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,7 +49,10 @@ public class GalgeSpil extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         updateOrd();
     }
-
+    
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -458,15 +467,17 @@ public class GalgeSpil extends javax.swing.JFrame {
         System.out.println(buttonPressed);
 
         try {
-            spil.gætBogstav(buttonPressed);
+            spil.gætBogstav(identifier, buttonPressed);
             updateOrd();
-            if (!spil.erSidsteBogstavKorrekt()) {
+            if (!spil.erSidsteBogstavKorrekt(identifier)) {
                 hangman();
             }
-            if (spil.erSpilletVundet()) {
+            if (spil.erSpilletVundet(identifier)) {
                 gameWon();
             }
         } catch (RemoteException ex) {
+            Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoInstanceOfGame ex) {
             Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -509,6 +520,7 @@ public class GalgeSpil extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                System.out.println("IsThisRun?");
                 try {
                     new GalgeSpil().setVisible(true);
                 } catch (NotBoundException ex) {
@@ -559,12 +571,24 @@ public class GalgeSpil extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void updateOrd() throws RemoteException {
-        jLabelGuess.setText(spil.getSynligtOrd());
+        try {
+            jLabelGuess.setText(spil.getSynligtOrd(identifier));
+        } catch (NoInstanceOfGame ex) {
+            Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void hangman() throws RemoteException {
-        int forkerte = spil.getAntalForkerteBogstaver();
+        int forkerte = 0;
+        try {
+            forkerte = spil.getAntalForkerteBogstaver(identifier);
+        } catch (NoInstanceOfGame ex) {
+            Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
+        }
         switch (forkerte) {
+            case 0: 
+                jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/galge.png")));
+                break;
             case 1:
                 jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert1.png")));
                 break;
@@ -582,15 +606,21 @@ public class GalgeSpil extends javax.swing.JFrame {
                 break;
             case 6:
                 jLabelImage.setIcon(new ImageIcon(getClass().getResource("/billeder/forkert6.png")));
+        {
+            try {
                 gameLost();
+            } catch (NoInstanceOfGame ex) {
+                Logger.getLogger(GalgeSpil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
         }
     }
 
-    private void gameLost() throws RemoteException {
+    private void gameLost() throws RemoteException, NoInstanceOfGame {
         jPanelButtons.setVisible(false);
         jLabel1.setText("Du har tabt!");
-        jLabelGuess.setText("Ordet var: " + spil.getOrdet());
+        jLabelGuess.setText("Ordet var: " + spil.getOrdet(identifier));
     }
 
     private void gameWon() {
