@@ -28,7 +28,7 @@ public class GalgeServer {
         //GalgelogikI k = new GalgelogikImpl();
         //Naming.rebind("rmi://[::]/galgetjeneste", k);
         
-        System.setProperty("java.rmi.server.hostname", "ubuntu4.saluton.dk");
+        System.setProperty("java.rmi.server.hostname", "130.226.195.227");
 	Naming.rebind("rmi://ubuntu4.saluton.dk:1151/galgetjeneste", gm);
         
         //Naming.rebind("rmi://localhost/galgetjeneste", gm);
