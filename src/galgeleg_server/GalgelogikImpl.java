@@ -55,7 +55,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
             ba.hentBruger(username, password);
             return true;
-            
+
         } catch (Exception ex) {
             System.out.println("No");
             return false;
@@ -104,26 +104,31 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
     public GalgelogikImpl(String identifier) throws java.rmi.RemoteException {
         timeOfLastCommunication = System.currentTimeMillis();
-        
-        
-        
-        
-        muligeOrd.add("bil");
-        muligeOrd.add("computer");
-        muligeOrd.add("programmering");
-        muligeOrd.add("motorvej");
-        muligeOrd.add("busrute");
-        muligeOrd.add("gangsti");
-        muligeOrd.add("skovsnegl");
-        muligeOrd.add("solsort");
-        muligeOrd.add("seksten");
-        muligeOrd.add("sytten");
+
+        try {
+            /*
+            muligeOrd.add("bil");
+            muligeOrd.add("computer");
+            muligeOrd.add("programmering");
+            muligeOrd.add("motorvej");
+            muligeOrd.add("busrute");
+            muligeOrd.add("gangsti");
+            muligeOrd.add("skovsnegl");
+            muligeOrd.add("solsort");
+            muligeOrd.add("seksten");
+            muligeOrd.add("sytten");
+            */
+            hentOrdFraDr(identifier);
+        } catch (IOException ex) {
+            Logger.getLogger(GalgelogikImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         nulstil(identifier);
     }
-    
+
     protected void updateTimeOfLastCommunication() {
         timeOfLastCommunication = System.currentTimeMillis();
     }
+
     protected long getTimeOfLastCommunication() {
         return timeOfLastCommunication;
     }
@@ -249,7 +254,6 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        
 
         String output;
         System.out.println("Output from server... \n");
@@ -257,14 +261,9 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
             System.out.println(output);
 
         }
-        
-        
-        
-        
 
         conn.disconnect();
 
     }
 
-    
 }
