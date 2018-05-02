@@ -5,7 +5,6 @@
  */
 package dao;
 
-import dao.entity.Highscore;
 import java.util.List;
 
 /**
@@ -13,9 +12,9 @@ import java.util.List;
  * @author durankose
  */
 public interface HighscoreDAO {
-    public List<Highscore> getAllScores();
-    public Highscore addScore(Highscore highScore);
-    public Highscore getScore(String sNumber);
+    public List<Highscore> getAllScores() throws DAOException;
+    public void addScore(Highscore highScore) throws DAOException;
+    public int getScore(String sNumber);
     public Highscore updateScore(Highscore highScore);
     public Highscore deleteScore(Highscore highScore);
 }
