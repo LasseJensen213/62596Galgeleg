@@ -14,7 +14,7 @@ import java.util.List;
 public interface HighscoreDAO {
     public List<Highscore> getAllScores() throws DAOException;
     public void addScore(Highscore highScore) throws DAOException;
-    public int getScore(String sNumber);
-    public Highscore updateScore(Highscore highScore);
-    public Highscore deleteScore(Highscore highScore);
+    public int getScore(String sNumber) throws DAOException;
+    public void updateScore(Highscore highScore) throws DAOException;
+    public void deleteScore(Highscore highScore) throws DAOException;
 }

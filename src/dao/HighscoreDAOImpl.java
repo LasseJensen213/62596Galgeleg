@@ -55,8 +55,8 @@ public class HighscoreDAOImpl implements HighscoreDAO {
         PreparedStatement statement= null;
         ResultSet resultSet= null;
         try {
-            Class.forName(db_driver);
-            connection = DriverManager.getConnection(db_url,db_user,db_pass);
+            
+            connection = getConnection();
             
             String sql = "SELECT * FROM Scores";
             statement = connection.prepareStatement(sql);
@@ -69,8 +69,6 @@ public class HighscoreDAOImpl implements HighscoreDAO {
                 Highscore highscore = new Highscore(sNumber, score);
                 highscores.add(highscore);
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             throw new DAOException(ex);
         } finally {
@@ -82,26 +80,25 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     
     
     @Override
-    public int getScore(String sNumber) {
+    public int getScore(String sNumber) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
         int score=0;
         try {
-            Class.forName(db_driver);
-            connection = DriverManager.getConnection(db_url,db_user,db_pass);
+           
+            connection = getConnection();
             
             String sql = "SELECT * FROM Scores WHERE SNumber = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, sNumber);
             
             resultSet = statement.executeQuery();
-            score = resultSet.getInt("Score");
-        
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            resultSet.next();
+            score = resultSet.getInt(2);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException(ex);
         } finally {
             closeResources(connection, statement, resultSet);
         }
@@ -110,35 +107,67 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     
     
     @Override
-    public Highscore updateScore(Highscore highScore) {
+    public void updateScore(Highscore highScore) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
         try {
-            Class.forName(db_driver);
-            connection = DriverManager.getConnection(db_url,db_user,db_pass);
+           
+            connection = getConnection();
             
-            String sql = "SELECT * FROM Scores WHERE SNumber = ?";
+            String sql = "UPDATE Scores set Score = ? WHERE SNumber = ?";
+            
             statement = connection.prepareStatement(sql);
-            statement.setString(1, null);
+            statement.setInt(1, highScore.getScore());
+            statement.setString(2, highScore.getSnumber());
             
-            resultSet = statement.executeQuery();
-      
-        
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            int numberOfRowsUpdate = statement.executeUpdate();
+            if (numberOfRowsUpdate != 1)
+            {
+                throw new DAOException("Update score failed");
+            }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException(ex);
         } finally {
             closeResources(connection, statement, resultSet);
         }
-        return null;
+        
     }
     
     @Override
-    public Highscore deleteScore(Highscore highScore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteScore(Highscore highScore) throws DAOException{
+        Connection connection = null;
+        PreparedStatement statement= null;
+        ResultSet resultSet= null;
+        try {
+            
+            connection = getConnection();
+            
+            String sql = "DELETE FROM Scores WHERE SNumber = ? ";
+            
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, highScore.getSnumber());
+
+            statement.executeUpdate();
+            
+            int numberOfRowsDeleted = statement.executeUpdate();
+            if (numberOfRowsDeleted != 1)
+            {
+                throw new DAOException("Delete score failed");
+            }
+            
+            
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
+        } finally {
+            closeResources(connection, statement, resultSet);
+        }
+        
+        
     }
+
     
     @Override
     public void addScore(Highscore highScore) throws DAOException{
@@ -148,9 +177,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
         ResultSet resultSet= null;
         try {
             
-            Class.forName(db_driver);
-            
-            connection = DriverManager.getConnection(db_url,db_user,db_pass);
+            connection = getConnection();
             
             String sql = "INSERT INTO Scores(SNumber, Score) VALUES (?, ?)";
             
@@ -162,8 +189,6 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             
         } catch (SQLException ex) {
             throw new DAOException(ex);
-        }catch (ClassNotFoundException ex) {
-            Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources(connection, statement, resultSet);
         }
@@ -171,14 +196,28 @@ public class HighscoreDAOImpl implements HighscoreDAO {
         
     }
     
-    private void closeResources(Connection connection, PreparedStatement statement,ResultSet resultSet) {
+    private Connection getConnection() throws DAOException {
+        try {
+            Class.forName(db_driver);
+            
+            return DriverManager.getConnection(db_url,db_user,db_pass);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
+        } catch (ClassNotFoundException ex) {
+            throw new DAOException(ex);
+        }
+        
+        
+    }
+    
+    private void closeResources(Connection connection, PreparedStatement statement,ResultSet resultSet) throws DAOException {
         //lukker alt forbindelse
         if (resultSet!=null)
         {
             try {
                 resultSet.close();
             } catch (SQLException ex) {
-                Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw new DAOException(ex);
             }
         }
         if (statement!=null)
@@ -186,7 +225,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             try {
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw new DAOException(ex);
             }
         }
         if (connection!=null)
@@ -194,7 +233,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             try {
                 connection.close();
             } catch (SQLException ex) {
-                Logger.getLogger(HighscoreDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw new DAOException(ex);
             }
         }
     }
