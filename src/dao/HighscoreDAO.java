@@ -16,5 +16,5 @@ public interface HighscoreDAO {
     public void addScore(Highscore highScore) throws DAOException;
     public int getScore(String sNumber) throws DAOException;
     public void updateScore(Highscore highScore) throws DAOException;
-    public void deleteScore(Highscore highScore) throws DAOException;
+    public void deleteScore(String sNumber) throws DAOException;
 }

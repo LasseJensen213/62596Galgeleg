@@ -7,7 +7,9 @@ import dao.HighscoreDAOImpl;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -22,10 +24,18 @@ import org.junit.Test;
  * @author durankose
  */
 public class HighscoreDAOImplTest {
+    HighscoreDAO dao = null;
+    Highscore highScore = null;
+    
+    @Before
+    public void setUp() {
+        dao = getConnection();
+        highScore = new Highscore("test",10);
+    }
     
     @Test
     public void testGetAllScores() throws Exception {
-        HighscoreDAO dao = getConnection();
+//        HighscoreDAO dao = getConnection();
         List<Highscore> scores = dao.getAllScores();
         
         Assert.assertNotNull(scores);
@@ -39,13 +49,9 @@ public class HighscoreDAOImplTest {
     @Test
     public void testAddScore() throws DAOException   {
         
-        HighscoreDAO dao = getConnection();
-        Highscore highscore = new Highscore("s147153", 40);
-        dao.addScore(highscore);
+        dao.addScore(highScore);
         
-        List<Highscore> scores = dao.getAllScores();
-        
-        Assert.assertNotNull(scores);
+        Assert.assertNotNull(dao.getScore(highScore.getSnumber()));
         
         
     }
@@ -53,24 +59,22 @@ public class HighscoreDAOImplTest {
     @Test
     public void testUpdateScore() throws DAOException   {
         
-        HighscoreDAO dao = getConnection();
-        Highscore highscore = new Highscore("s147153", 20);
-        dao.updateScore(highscore);
-        int updatedScore = dao.getScore("s147153");
+        highScore.setScore(20);
+        dao.updateScore(highScore);
+        int updatedScore = dao.getScore("test");
         
         Assert.assertNotNull(dao);
         
         Assert.assertEquals(20, updatedScore);
-        
-        
+            
     }
     
-    @Test
+    @Ignore
     public void testDeleteScore() throws DAOException {
-        HighscoreDAO dao = getConnection();
-        Highscore highscore = new Highscore("s147153", 20);
-        dao.deleteScore(highscore);
-         
+
+        dao.deleteScore("test");
+        Assert.assertNotNull(dao);
+        
     }
     
     private HighscoreDAO getConnection() {

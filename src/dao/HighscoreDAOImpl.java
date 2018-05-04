@@ -115,14 +115,17 @@ public class HighscoreDAOImpl implements HighscoreDAO {
            
             connection = getConnection();
             
-            String sql = "UPDATE Scores set Score = ? WHERE SNumber = ?";
+            String sql = "UPDATE Scores SET Score = ? WHERE SNumber = ?";
             
             statement = connection.prepareStatement(sql);
             statement.setInt(1, highScore.getScore());
             statement.setString(2, highScore.getSnumber());
             
             
+            //statement.executeUpdate();
+            
             int numberOfRowsUpdate = statement.executeUpdate();
+            System.out.println(numberOfRowsUpdate);
             if (numberOfRowsUpdate != 1)
             {
                 throw new DAOException("Update score failed");
@@ -137,7 +140,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     }
     
     @Override
-    public void deleteScore(Highscore highScore) throws DAOException{
+    public void deleteScore(String sNumber) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
@@ -145,14 +148,16 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             
             connection = getConnection();
             
-            String sql = "DELETE FROM Scores WHERE SNumber = ? ";
+            String sql = "DELETE IGNORE FROM Scores WHERE SNumber = ?";
             
             statement = connection.prepareStatement(sql);
-            statement.setString(1, highScore.getSnumber());
+            statement.setString(1, sNumber);
+            System.out.println(sNumber);
 
-            statement.executeUpdate();
+            //statement.executeUpdate();
             
             int numberOfRowsDeleted = statement.executeUpdate();
+            System.out.println(numberOfRowsDeleted);
             if (numberOfRowsDeleted != 1)
             {
                 throw new DAOException("Delete score failed");
@@ -179,7 +184,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             
             connection = getConnection();
             
-            String sql = "INSERT INTO Scores(SNumber, Score) VALUES (?, ?)";
+            String sql = "INSERT IGNORE INTO Scores(SNumber, Score) VALUES (?,?)";
             
             statement = connection.prepareStatement(sql);
             statement.setString(1, highScore.getSnumber());
