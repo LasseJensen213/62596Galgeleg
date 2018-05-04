@@ -140,7 +140,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     }
     
     @Override
-    public void deleteScore(String sNumber) throws DAOException{
+    public void deleteScore(Highscore highScore) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
@@ -148,11 +148,10 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             
             connection = getConnection();
             
-            String sql = "DELETE IGNORE FROM Scores WHERE SNumber = ?";
+            String sql = "DELETE FROM Scores WHERE SNumber = ?";
             
             statement = connection.prepareStatement(sql);
-            statement.setString(1, sNumber);
-            System.out.println(sNumber);
+            statement.setString(1, highScore.getSnumber());
 
             //statement.executeUpdate();
             
