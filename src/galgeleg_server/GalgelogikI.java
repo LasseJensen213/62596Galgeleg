@@ -52,4 +52,9 @@ public interface GalgelogikI extends java.rmi.Remote {
     public boolean auth(String username, String password) throws Exception, java.rmi.RemoteException, NoInstanceOfGame;
     
     
+    public GameState updateGameState (String identifier , String letter) throws java.rmi.RemoteException, NoInstanceOfGame;
+    
+    public GameState getGameState (String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
+    
+    
 }

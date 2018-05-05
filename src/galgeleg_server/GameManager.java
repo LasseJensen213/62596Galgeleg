@@ -140,6 +140,16 @@ public class GameManager extends UnicastRemoteObject implements GalgelogikI {
         }
 
     }
+    @Override
+    public GameState updateGameState (String identifier , String letter) throws java.rmi.RemoteException, NoInstanceOfGame
+    {
+        return getGame(identifier).updateGameState(identifier, letter);
+    }
+    @Override
+    public GameState getGameState (String identifier) throws java.rmi.RemoteException, NoInstanceOfGame
+    {
+        return getGame(identifier).getGameState(identifier);
+    }
 
     class CleanUpThread implements Runnable {
         @Override

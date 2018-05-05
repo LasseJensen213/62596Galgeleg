@@ -327,5 +327,33 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         conn.disconnect();
 
     }
+    @Override
+    public GameState updateGameState (String identifier , String letter)
+    {
+        GameState state = new GameState();
+        gætBogstav(identifier, letter);
+        state.SpilletErTabt = this.spilletErTabt;
+        state.spillertErVundet = this.spilletErVundet;
+        state.antalForkerteBogstaver = this.antalForkerteBogstaver;
+        state.ordet = this.ordet;
+        state.synligtOrd = this.synligtOrd;
+        state.sidsteBogstavVarKorrekt = this.sidsteBogstavVarKorrekt;
+        state.brugteBogstaver = this.brugteBogstaver;
+        return state;
+        
+    }
+    @Override
+    public GameState getGameState (String identifier)
+    {
+        GameState state = new GameState();
+        state.SpilletErTabt = this.spilletErTabt;
+        state.spillertErVundet = this.spilletErVundet;
+        state.antalForkerteBogstaver = this.antalForkerteBogstaver;
+        state.ordet = this.ordet;
+        state.synligtOrd = this.synligtOrd;
+        state.sidsteBogstavVarKorrekt = this.sidsteBogstavVarKorrekt;
+        state.brugteBogstaver = this.brugteBogstaver;
+        return state;
+    }
 
 }
