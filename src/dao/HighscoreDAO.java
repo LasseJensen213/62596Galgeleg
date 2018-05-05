@@ -12,9 +12,9 @@ import java.util.List;
  * @author durankose
  */
 public interface HighscoreDAO {
-    public List<Highscore> getAllScores() throws DAOException;
-    public void addScore(Highscore highScore) throws DAOException;
+    public List<HighscoreDTO> getAllScores() throws DAOException;
+    public void addScore(HighscoreDTO highScore) throws DAOException;
     public int getScore(String sNumber) throws DAOException;
-    public void updateScore(Highscore highScore) throws DAOException;
-    public void deleteScore(Highscore highScore) throws DAOException;
+    public void updateScore(HighscoreDTO highScore) throws DAOException;
+    public void deleteScore(HighscoreDTO highScore) throws DAOException;
 }

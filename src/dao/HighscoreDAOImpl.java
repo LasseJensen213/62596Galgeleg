@@ -6,7 +6,7 @@
 package dao;
 
 import dao.HighscoreDAO;
-import dao.Highscore;
+import dao.HighscoreDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -49,8 +49,8 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     
     
     @Override
-    public List<Highscore> getAllScores() throws DAOException{
-        List<Highscore> highscores = new ArrayList<Highscore>();
+    public List<HighscoreDTO> getAllScores() throws DAOException{
+        List<HighscoreDTO> highscores = new ArrayList<HighscoreDTO>();
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
@@ -66,7 +66,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             {
                 String sNumber = resultSet.getString("SNumber");
                 int score = resultSet.getInt("Score");
-                Highscore highscore = new Highscore(sNumber, score);
+                HighscoreDTO highscore = new HighscoreDTO(sNumber, score);
                 highscores.add(highscore);
             }
         } catch (SQLException ex) {
@@ -107,7 +107,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     
     
     @Override
-    public void updateScore(Highscore highScore) throws DAOException{
+    public void updateScore(HighscoreDTO highScore) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
@@ -140,7 +140,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
     }
     
     @Override
-    public void deleteScore(Highscore highScore) throws DAOException{
+    public void deleteScore(HighscoreDTO highScore) throws DAOException{
         Connection connection = null;
         PreparedStatement statement= null;
         ResultSet resultSet= null;
@@ -174,7 +174,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
 
     
     @Override
-    public void addScore(Highscore highScore) throws DAOException{
+    public void addScore(HighscoreDTO highScore) throws DAOException{
         
         Connection connection = null;
         PreparedStatement statement= null;

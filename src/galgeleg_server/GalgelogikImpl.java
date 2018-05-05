@@ -19,7 +19,7 @@ import javax.xml.ws.Service;
 
 import brugerautorisation.transport.soap.Brugeradmin;
 import dao.DAOException;
-import dao.Highscore;
+import dao.HighscoreDTO;
 import dao.HighscoreDAO;
 import dao.HighscoreDAOImpl;
 
@@ -157,7 +157,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         }
         HighscoreDAO highscoreDAO = new HighscoreDAOImpl("url","user","pass");
         int difficulty = calculateDifficulty(identifier);
-        Highscore highscore = new Highscore("s165221", difficulty);
+        HighscoreDTO highscore = new HighscoreDTO("s165221", difficulty);
         
         try {
 			highscoreDAO.addScore(highscore);

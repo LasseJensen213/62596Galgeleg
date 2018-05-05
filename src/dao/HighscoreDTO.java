@@ -9,11 +9,11 @@ package dao;
  *
  * @author durankose
  */
-public class Highscore {
+public class HighscoreDTO {
     private String snumber;
     private int score;
     
-    public Highscore(String snumber, int score) {
+    public HighscoreDTO(String snumber, int score) {
         this.snumber = snumber;
         this.score = score;
     }
