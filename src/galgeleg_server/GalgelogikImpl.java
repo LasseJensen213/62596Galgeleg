@@ -163,7 +163,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
         if (bogstav.length() != 1) {
             return;
         }
-        System.out.println("Der gættes på bogstavet: " + bogstav);
+        System.out.println("Der g�ttes på bogstavet: " + bogstav);
         if (brugteBogstaver.contains(bogstav)) {
             return;
         }
@@ -177,7 +177,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
             sidsteBogstavVarKorrekt = true;
             System.out.println("Bogstavet var korrekt: " + bogstav);
         } else {
-            // Vi gættede på et bogstav der ikke var i ordet.
+            // Vi g�ttede på et bogstav der ikke var i ordet.
             sidsteBogstavVarKorrekt = false;
             System.out.println("Bogstavet var IKKE korrekt: " + bogstav);
             antalForkerteBogstaver = antalForkerteBogstaver + 1;
@@ -223,8 +223,8 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
         data = data.substring(data.indexOf("<body")). // fjern headere
                 replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
-                replaceAll("&#198;", "æ"). // erstat HTML-tegn
-                replaceAll("&#230;", "æ"). // erstat HTML-tegn
+                replaceAll("&#198;", "�"). // erstat HTML-tegn
+                replaceAll("&#230;", "�"). // erstat HTML-tegn
                 replaceAll("&#216;", "ø"). // erstat HTML-tegn
                 replaceAll("&#248;", "ø"). // erstat HTML-tegn
                 replaceAll("&oslash;", "ø"). // erstat HTML-tegn
