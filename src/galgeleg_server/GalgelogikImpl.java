@@ -1,28 +1,27 @@
 package galgeleg_server;
 
-import brugerautorisation.transport.soap.Brugeradmin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RMISecurityManager;
-import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
+import brugerautorisation.transport.soap.Brugeradmin;
+import dao.DAOException;
+import dao.Highscore;
+import dao.HighscoreDAO;
+import dao.HighscoreDAOImpl;
 
 public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
@@ -156,6 +155,69 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
                 spilletErVundet = false;
             }
         }
+        HighscoreDAO highscoreDAO = new HighscoreDAOImpl("url","user","pass");
+        int difficulty = calculateDifficulty(identifier);
+        Highscore highscore = new Highscore("s165221", difficulty);
+        
+        try {
+			highscoreDAO.addScore(highscore);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+    }
+    private int calculateDifficulty(String word) {
+        char[] charArray = word.toCharArray();
+
+        int difficulty = 0;
+        for(char c : charArray)
+        {
+            difficulty += charFrequency(c);
+        }
+
+        return difficulty;
+    }
+
+    private int charFrequency(char c) {
+        char[] point1 = {'e','a','n','r'};
+        char[] point2 = {'d','l','o','s','t'};
+        char[] point3 = {'b','i','k','f','g','m','u','v'};
+        char[] point4 = {'h','j','p','u','æ','ø','å'};
+        char[] point8 = {'c','x','z'};
+        char[] point10 = {'q','w'};
+
+        for(char character : point1) {
+            if (character==c){
+                return 1;
+            }
+        }
+        for(char character : point2) {
+            if (character==c){
+                return 2;
+            }
+        }
+        for(char character : point3) {
+            if (character==c){
+                return 3;
+            }
+        }
+        for(char character : point4) {
+            if (character==c){
+                return 4;
+            }
+        }
+        for(char character : point8) {
+            if (character==c){
+                return 8;
+            }
+        }
+        for(char character : point10) {
+            if (character==c){
+                return 10;
+            }
+        }
+        return 0;
     }
 
     @Override
