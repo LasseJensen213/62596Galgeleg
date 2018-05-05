@@ -14,6 +14,10 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
+
+import dao.DAOException;
+import dao.HighscoreDTO;
 
 /**
  *
@@ -56,5 +60,5 @@ public interface GalgelogikI extends java.rmi.Remote {
     
     public GameState getGameState (String identifier) throws java.rmi.RemoteException, NoInstanceOfGame;
     
-    
+    public List<HighscoreDTO> getAllScores() throws java.rmi.RemoteException, DAOException;
 }
