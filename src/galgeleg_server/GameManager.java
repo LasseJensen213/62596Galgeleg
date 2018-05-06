@@ -5,11 +5,16 @@
  */
 package galgeleg_server;
 
+import dao.DAOException;
+import dao.HighscoreDAO;
+import dao.HighscoreDAOImpl;
+import dao.HighscoreDTO;
 import galgeleg_client.Exceptions.NoInstanceOfGame;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -18,6 +23,7 @@ import java.util.logging.Logger;
 public class GameManager extends UnicastRemoteObject implements GalgelogikI {
 
     Map<String, GalgelogikImpl> listOfGames = new HashMap<>();
+    HighscoreDAO highscoreDAO = new HighscoreDAOImpl();
 
     public GameManager() throws java.rmi.RemoteException {
         System.out.println("BeforeThread");
@@ -149,6 +155,11 @@ public class GameManager extends UnicastRemoteObject implements GalgelogikI {
     public GameState getGameState (String identifier) throws java.rmi.RemoteException, NoInstanceOfGame
     {
         return getGame(identifier).getGameState(identifier);
+    }
+
+    @Override
+    public List<HighscoreDTO> getAllScores() throws RemoteException, DAOException {
+       return highscoreDAO.getAllScores();
     }
 
     class CleanUpThread implements Runnable {
