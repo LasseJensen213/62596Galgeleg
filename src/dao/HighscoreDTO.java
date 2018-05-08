@@ -5,13 +5,19 @@
  */
 package dao;
 
+import java.rmi.Remote;
+
 /**
  *
  * @author durankose
  */
-public class HighscoreDTO {
+public class HighscoreDTO implements Remote, java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String snumber;
-	private int score;
+	private transient int score;
 	private String word;
 
 	public HighscoreDTO(String word, String snumber, int score) {
