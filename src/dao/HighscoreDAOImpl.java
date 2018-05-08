@@ -99,7 +99,7 @@ public class HighscoreDAOImpl implements HighscoreDAO {
             
             connection = getConnection();
             
-            String sql = "CALL addNewHighscore(?,?)";
+            String sql = "CALL addNewHighscore(?,?,?)";
             
             statement = connection.prepareStatement(sql);
             statement.setString(1, highScore.getWord());
