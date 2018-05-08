@@ -264,6 +264,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 			spilletErVundet = true;
 			
 		}
+		addNewHighscore(word, identifier);
 	}
 
 	@Override
