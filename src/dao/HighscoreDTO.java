@@ -17,7 +17,7 @@ public class HighscoreDTO implements Remote, java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String snumber;
-	private transient int score;
+	private int score;
 	private String word;
 
 	public HighscoreDTO(String word, String snumber, int score) {
@@ -49,4 +49,11 @@ public class HighscoreDTO implements Remote, java.io.Serializable {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+	@Override
+	public String toString() {
+		return "HighscoreDTO [snumber=" + snumber + ", score=" + score + ", word=" + word + "]";
+	}
+	
+	
 }
