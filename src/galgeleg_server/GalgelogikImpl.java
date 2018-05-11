@@ -46,8 +46,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 			System.out.println("Login attempt: " + username + ":" + password);
 
 			/*
-            if(username.equals("test") && password.equals("test"))
-                return true;
+			 * if(username.equals("test") && password.equals("test")) return true;
 			 */
 			URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
 			QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
@@ -108,16 +107,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 
 		try {
 			/*
-            muligeOrd.add("bil");
-            muligeOrd.add("computer");
-            muligeOrd.add("programmering");
-            muligeOrd.add("motorvej");
-            muligeOrd.add("busrute");
-            muligeOrd.add("gangsti");
-            muligeOrd.add("skovsnegl");
-            muligeOrd.add("solsort");
-            muligeOrd.add("seksten");
-            muligeOrd.add("sytten");
+			 * muligeOrd.add("bil"); muligeOrd.add("computer");
+			 * muligeOrd.add("programmering"); muligeOrd.add("motorvej");
+			 * muligeOrd.add("busrute"); muligeOrd.add("gangsti");
+			 * muligeOrd.add("skovsnegl"); muligeOrd.add("solsort");
+			 * muligeOrd.add("seksten"); muligeOrd.add("sytten");
 			 */
 			hentOrdFraDr(identifier);
 		} catch (IOException ex) {
@@ -157,12 +151,12 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 				spilletErVundet = false;
 			}
 		}
-		if(spilletErVundet) {
+		if (spilletErVundet) {
 			addNewHighscore(ordet, identifier);
 		}
 
 	}
-	
+
 	public void addNewHighscore(String word, String sNumber) {
 		HighscoreDAO highscoreDAO = new HighscoreDAOImpl();
 		int difficulty = calculateDifficulty(word);
@@ -175,13 +169,12 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int calculateDifficulty(String word) {
 		char[] charArray = word.toCharArray();
 
 		int difficulty = 0;
-		for(char c : charArray)
-		{
+		for (char c : charArray) {
 			difficulty += charFrequency(c);
 		}
 
@@ -189,40 +182,40 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 	}
 
 	private int charFrequency(char c) {
-		char[] point1 = {'e','a','n','r'};
-		char[] point2 = {'d','l','o','s','t'};
-		char[] point3 = {'b','i','k','f','g','m','u','v'};
-		char[] point4 = {'h','j','p','u','æ','ø','å'};
-		char[] point8 = {'c','x','z'};
-		char[] point10 = {'q','w'};
+		char[] point1 = { 'e', 'a', 'n', 'r' };
+		char[] point2 = { 'd', 'l', 'o', 's', 't' };
+		char[] point3 = { 'b', 'i', 'k', 'f', 'g', 'm', 'u', 'v' };
+		char[] point4 = { 'h', 'j', 'p', 'u', 'æ', 'ø', 'å' };
+		char[] point8 = { 'c', 'x', 'z' };
+		char[] point10 = { 'q', 'w' };
 
-		for(char character : point1) {
-			if (character==c){
+		for (char character : point1) {
+			if (character == c) {
 				return 1;
 			}
 		}
-		for(char character : point2) {
-			if (character==c){
+		for (char character : point2) {
+			if (character == c) {
 				return 2;
 			}
 		}
-		for(char character : point3) {
-			if (character==c){
+		for (char character : point3) {
+			if (character == c) {
 				return 3;
 			}
 		}
-		for(char character : point4) {
-			if (character==c){
+		for (char character : point4) {
+			if (character == c) {
 				return 4;
 			}
 		}
-		for(char character : point8) {
-			if (character==c){
+		for (char character : point8) {
+			if (character == c) {
 				return 8;
 			}
 		}
-		for(char character : point10) {
-			if (character==c){
+		for (char character : point10) {
+			if (character == c) {
 				return 10;
 			}
 		}
@@ -234,7 +227,8 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 		if (bogstav.length() != 1) {
 			return;
 		}
-		System.out.println("Der g�ttes på bogstavet: " + bogstav);
+		bogstav = bogstav.toLowerCase();
+		System.out.println("Der gættes på bogstavet: " + bogstav);
 		if (brugteBogstaver.contains(bogstav)) {
 			return;
 		}
@@ -258,11 +252,11 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 		}
 		opdaterSynligtOrd(identifier);
 	}
-	
+
 	public void guessWord(String identifier, String word) {
-		if(ordet.equals(word)) {
+		if (ordet.equals(word)) {
 			spilletErVundet = true;
-			
+
 		}
 		addNewHighscore(word, identifier);
 	}
@@ -298,12 +292,12 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 	@Override
 	public void hentOrdFraDr(String identifier) throws IOException {
 		String data = hentUrl("https://dr.dk");
-		//System.out.println("data = " + data);
+		// System.out.println("data = " + data);
 
 		data = data.substring(data.indexOf("<body")). // fjern headere
 				replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
-				replaceAll("&#198;", "�"). // erstat HTML-tegn
-				replaceAll("&#230;", "�"). // erstat HTML-tegn
+				replaceAll("&#198;", "æ"). // erstat HTML-tegn
+				replaceAll("&#230;", "æ"). // erstat HTML-tegn
 				replaceAll("&#216;", "ø"). // erstat HTML-tegn
 				replaceAll("&#248;", "ø"). // erstat HTML-tegn
 				replaceAll("&oslash;", "ø"). // erstat HTML-tegn
@@ -344,9 +338,9 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 		conn.disconnect();
 
 	}
+
 	@Override
-	public GameState updateGameState (String identifier , String letter)
-	{
+	public GameState updateGameState(String identifier, String letter) {
 		GameState state = new GameState();
 		gætBogstav(identifier, letter);
 		state.SpilletErTabt = this.spilletErTabt;
@@ -359,9 +353,9 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 		return state;
 
 	}
+
 	@Override
-	public GameState getGameState (String identifier)
-	{
+	public GameState getGameState(String identifier) {
 		GameState state = new GameState();
 		state.SpilletErTabt = this.spilletErTabt;
 		state.spillertErVundet = this.spilletErVundet;
@@ -377,7 +371,7 @@ public class GalgelogikImpl extends UnicastRemoteObject implements GalgelogikI {
 	public List<HighscoreDTO> getAllScores() throws RemoteException, DAOException {
 		HighscoreDAO dao = new HighscoreDAOImpl();
 		return dao.getAllScores();
-		
+
 	}
 
 }
